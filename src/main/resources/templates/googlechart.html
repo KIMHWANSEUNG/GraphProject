@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>구글차트</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- jQuery ui style sheet -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- jQuery ui library -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+<center>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+    <h2><a href="/">홈으로</a></h2>
+</center>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "googlechart.ajax",
+            data: {},
+            success: function (response) {
+
+                googlechart(response)
+            }
+
+        })
+
+    })
+
+    function googlechart(DBdata) {
+        function drawVisualization() {
+            // Some raw data (not necessarily accurate)
+            var data = google.visualization.arrayToDataTable(DBdata);
+
+            var options = {
+                title: '2020년 1월~7월 물품별 개수 및 평균 차트 ',
+                vAxis: {title: '수량'},
+                hAxis: {title: '월별'},
+                seriesType: 'bars',
+                series: {4: {type: 'line'}}
+            };
+
+            var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+
+        }
+
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(drawVisualization);
+    }
+
+
+</script>
+
+
+</body>
+</html>

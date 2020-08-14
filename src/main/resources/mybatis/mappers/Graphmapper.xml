@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.homework.Repository.mapper.GraphMapper">
+
+
+    <select id="GraphData1" resultType="chartjsvo">
+select
+    substr(STD_DT,1,6)
+    as month,sum(BUY_CNT) as sum
+from
+     HW_CHARTS_DATA
+where
+    STD_DT
+between
+    '20190101'
+and
+    '20190731'
+group by
+    substr(STD_DT,1,6)
+order by
+    month
+    </select>
+
+    <select id="GraphData2" resultType="chartjsvo">
+select
+    substr(STD_DT,1,6)
+    as month,sum(BUY_CNT) as sum
+from
+     HW_CHARTS_DATA
+where
+    STD_DT
+between
+    '20200101'
+and
+    '20200731'
+group by
+    substr(STD_DT,1,6)
+order by
+    month
+    </select>
+
+    <select id="googlechart" resultType="googlechartvo">
+select
+    sum(BUY_CNT) as sum1,
+    PRODUCT as product,
+    substr(STD_DT,6,1) as date1
+from
+     HW_CHARTS_DATA
+where
+    STD_DT
+between
+    '20200101'
+and
+    '20200731'
+group by
+    substr(STD_DT,6,1),PRODUCT
+order by
+    PRODUCT,substr(STD_DT,6,1)
+</select>
+
+
+</mapper>
